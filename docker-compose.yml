@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+    app:
+        build:
+            context: .
+            target: builder
+        command: npm run dev
+        ports:
+            - '3000:3000'
+        volumes:
+            - .:/app
+            - /app/node_modules
+        environment:
+            - NODE_ENV=development
+            - POSTGRES_HOST=postgres
+            - POSTGRES_DB=finelth
+            - POSTGRES_USER=finelth_user
+            - POSTGRES_PASSWORD=finelth_password
+            - REDIS_HOST=redis
+        depends_on:
+            - postgres
+            - redis
+
+    postgres:
+        image: postgres:14-alpine
+        ports:
+            - '5432:5432'
+        environment:
+            - POSTGRES_DB=finelth
+            - POSTGRES_USER=finelth_user
+            - POSTGRES_PASSWORD=finelth_password
+        volumes:
+            - postgres_data:/var/lib/postgresql/data
+
+    redis:
+        image: redis:7-alpine
+        ports:
+            - '6379:6379'
+        volumes:
+            - redis_data:/data
+
+volumes:
+    postgres_data:
+    redis_data:
