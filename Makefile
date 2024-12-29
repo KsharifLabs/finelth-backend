@@ -12,6 +12,7 @@ INFO = @echo "${GREEN}[INFO]${NC}"
 # Show help
 help:
 	@echo "Available commands:"
+	@echo "  make start    - Start Docker container"
 	@echo "  make build    - Build Docker images"
 	@echo "  make up       - Start all services"
 	@echo "  make down     - Stop and remove all containers"
@@ -20,6 +21,14 @@ help:
 	@echo "  make ps       - List running services"
 	@echo "  make clean    - Remove all containers, volumes, and images"
 	@echo "  make test     - Run tests in Docker environment"
+	@echo "  make dev      - Start development environment"
+	@echo "  make shell    - Open shell in app container"
+	@echo "  make install  - Install dependencies"
+
+# start docker container
+start:
+	${INFO} "Starting Docker container..."
+	${DOCKER_COMPOSE} up
 
 # Build Docker images
 build:
@@ -70,3 +79,8 @@ dev:
 shell:
 	${INFO} "Opening shell in app container..."
 	${DOCKER_COMPOSE} exec app sh
+
+# Install dependencies
+install:
+	${INFO} "Installing dependencies..."
+	${DOCKER_COMPOSE} run --rm app npm install
