@@ -13,14 +13,11 @@ services:
             - /app/node_modules
         environment:
             - NODE_ENV=development
-            - POSTGRES_HOST=postgres
-            - POSTGRES_DB=finelth
-            - POSTGRES_USER=finelth_user
-            - POSTGRES_PASSWORD=finelth_password
-            - REDIS_HOST=redis
         depends_on:
             - postgres
             - redis
+        env_file:
+            - .env
 
     postgres:
         image: postgres:14-alpine
