@@ -24,6 +24,7 @@ help:
 	@echo "  make dev      - Start development environment"
 	@echo "  make shell    - Open shell in app container"
 	@echo "  make install  - Install dependencies"
+	@echo "  make install-package - Install a specific package"
 
 # start docker container
 start:
@@ -33,7 +34,7 @@ start:
 # Build Docker images
 build:
 	${INFO} "Building Docker images..."
-	${DOCKER_COMPOSE} build
+	${DOCKER_COMPOSE} build --no-cache
 
 # Start all services
 up:
@@ -84,3 +85,23 @@ shell:
 install:
 	${INFO} "Installing dependencies..."
 	${DOCKER_COMPOSE} run --rm app npm install
+
+# install a specific package as a dev dependency
+# make install-package-dev package=drizzle-kit
+install-package-dev:
+	${INFO} "Installing package..."
+	${DOCKER_COMPOSE} run --rm app npm install ${package} --save-dev
+
+# install a specific package as a dependency
+# make install-package package=drizzle-kit
+install-package:
+	${INFO} "Installing package..."
+	${DOCKER_COMPOSE} run --rm app npm install --save ${package}
+
+generate-migrations:
+	${INFO} "Generating migrations..."
+	${DOCKER_COMPOSE} run --rm app drizzle-kit generate --name=${name}
+
+migrate:
+	${INFO} "Migrating..."
+	${DOCKER_COMPOSE} run --rm app npm run migrate

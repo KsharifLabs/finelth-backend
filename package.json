@@ -3,11 +3,12 @@
   "version": "1.0.0",
   "description": "A modern budgeting and expense management application.",
   "main": "dist/index.js",
+  "type": "module",
   "engines": {
     "node": ">=18.0.0"
   },
   "scripts": {
-    "start": "node dist/index.js",
+    "start": "node --loader ts-node/esm src/index.ts",
     "dev": "nodemon",
     "build": "tsc",
     "lint": "eslint . --ext .ts",
@@ -16,7 +17,8 @@
     "type-check": "tsc --noEmit",
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "jest --coverage",
+    "migrate": "node_modules/.bin/drizzle-kit migrate"
   },
   "lint-staged": {
     "*.{js,ts}": [
@@ -30,10 +32,14 @@
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
+    "drizzle-kit": "^0.30.1",
     "drizzle-orm": "^0.38.3",
     "express": "^4.18.2",
     "helmet": "^7.1.0",
-    "pg": "^8.13.1"
+    "pg": "^8.13.1",
+    "swagger-ui-express": "^5.0.1",
+    "tsconfig-paths": "^4.2.0",
+    "zod": "^3.24.1"
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",
@@ -42,6 +48,8 @@
     "@types/node": "^20.10.0",
     "@types/pg": "^8.11.10",
     "@types/supertest": "^2.0.16",
+    "@types/swagger-jsdoc": "^6.0.4",
+    "@types/swagger-ui-express": "^4.1.7",
     "@typescript-eslint/eslint-plugin": "^6.12.0",
     "@typescript-eslint/parser": "^6.12.0",
     "drizzle-kit": "^0.30.1",
@@ -54,7 +62,8 @@
     "lint-staged": "^15.1.0",
     "nodemon": "^3.0.1",
     "prettier": "^3.1.0",
-    "supertest": "^6.3.3",
+    "supertest": "^6.3.4",
+    "swagger-jsdoc": "^6.2.8",
     "ts-jest": "^29.1.1",
     "ts-node": "^10.9.1",
     "typescript": "^5.3.2"
