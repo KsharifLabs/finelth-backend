@@ -2,7 +2,7 @@ import express, { Express } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 
-import { db } from './db/setup';
+import setupRoutes from './routes.js';
 
 export function createApp(): Express {
     const app = express();
@@ -14,15 +14,7 @@ export function createApp(): Express {
     app.use(express.urlencoded({ extended: true }));
 
     // Routes
-    app.get('/', async (req, res) => {
-        const result = await db.execute('select 1');
-        console.log(result);
-        res.send('Express + TypeScript Server is running');
-    });
-
-    app.get('/hello', (req, res) => {
-        res.json({ message: 'Hello World!' });
-    });
+    setupRoutes(app);
 
     return app;
 }

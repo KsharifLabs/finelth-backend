@@ -19,7 +19,7 @@ COPY . .
 RUN npm run build
 
 # Stage 2: Production
-FROM node:16-alpine
+FROM node:18-alpine
 
 # Add dumb-init for proper signal handling
 RUN apk add --no-cache dumb-init
@@ -32,9 +32,13 @@ WORKDIR /app
 # Copy only necessary files from builder
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/package*.json ./
+COPY --from=builder /app/tsconfig.json ./
 
 # Install production dependencies only
 RUN npm ci --only=production
+
+# Install tsconfig-paths to resolve TypeScript path aliases
+RUN npm install tsconfig-paths
 
 # Switch to non-root user
 USER appuser
@@ -42,4 +46,5 @@ USER appuser
 # Use dumb-init as entrypoint
 ENTRYPOINT ["dumb-init", "--"]
 
-CMD ["node", "dist/index.js"]
+# Use tsconfig-paths to resolve path aliases
+CMD ["npm", "run", "dev"]

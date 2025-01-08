@@ -10,7 +10,16 @@ const config: Config.InitialOptions = {
     testPathIgnorePatterns: ['/node_modules/', '/dist/'],
     moduleFileExtensions: ['ts', 'js', 'json', 'node'],
     moduleNameMapper: {
-        '^@/(.*)$': '<rootDir>/src/$1',
+        '^(\\.{1,2}/.*)\\.js$': '$1',
+    },
+    extensionsToTreatAsEsm: ['.ts'],
+    transform: {
+        '^.+\\.tsx?$': [
+            'ts-jest',
+            {
+                useESM: true,
+            },
+        ],
     },
 };
 
