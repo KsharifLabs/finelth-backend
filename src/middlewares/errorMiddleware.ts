@@ -2,7 +2,7 @@ import { ZodError } from 'zod';
 import type { NextFunction, Request, Response } from 'express';
 
 import type { AppErrorType } from '../utils/AppError';
-import NotFoundError from '../utils/NotFoundError';
+import NotFoundError from '../utils/NotFoundError.js';
 
 const errorMiddleware = (err: AppErrorType, req: Request, res: Response, _next: NextFunction) => {
     let status = err.status || 500;
