@@ -13,7 +13,7 @@
     "forceConsistentCasingInFileNames": true,
     "moduleResolution": "node",
     "sourceMap": true,
-    "noEmit": true,
+    "noEmit": false,
     "baseUrl": ".",
     "types": ["@types/jest", "@types/superagent", "node"],
     "paths": {
@@ -21,8 +21,5 @@
     }
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules"],
-  "ts-node": {
-    "esm": true
-  }
+  "exclude": ["node_modules"]
 }

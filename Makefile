@@ -98,6 +98,10 @@ install-package:
 	${INFO} "Installing package..."
 	${DOCKER_COMPOSE} run --rm app npm install --save ${package}
 
+uninstall-package:
+	${INFO} "Uninstalling package..."
+	${DOCKER_COMPOSE} run --rm app npm uninstall ${package}
+
 generate-migrations:
 	${INFO} "Generating migrations..."
 	${DOCKER_COMPOSE} run --rm app drizzle-kit generate --name=${name}

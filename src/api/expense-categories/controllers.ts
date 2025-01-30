@@ -72,6 +72,7 @@ const getExpenseCategories = async (req: Request, res: Response, next: NextFunct
             ...response,
         });
     } catch (error) {
+        console.error('Error in getExpenseCategories:', error);
         next(error);
     }
 };
