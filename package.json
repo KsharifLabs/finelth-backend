@@ -13,6 +13,7 @@
     "build": "tsc",
     "lint": "eslint . --ext .ts",
     "format": "prettier --write \"src/**/*.ts\"",
+    "format:check": "prettier --check \"src/**/*.ts\"",
     "prepare": "husky install",
     "type-check": "tsc --noEmit",
     "test": "jest",
