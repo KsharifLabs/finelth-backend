@@ -7,7 +7,7 @@ GREEN = \033[0;32m
 NC = \033[0m # No Color
 INFO = @echo "${GREEN}[INFO]${NC}"
 
-.PHONY: help build up down restart logs ps clean test
+.PHONY: help build up down restart logs ps clean test clean-deps fix-install rebuild-modules
 
 # Show help
 help:
@@ -25,6 +25,9 @@ help:
 	@echo "  make shell    - Open shell in app container"
 	@echo "  make install  - Install dependencies"
 	@echo "  make install-package - Install a specific package"
+	@echo "  make clean-deps - Clean Node.js dependencies"
+	@echo "  make fix-install - Fix permissions and clean install"
+	@echo "  make rebuild-modules - Force rebuild node modules with platform-specific binaries"
 
 # start docker container
 start:
@@ -109,3 +112,18 @@ generate-migrations:
 migrate:
 	${INFO} "Migrating..."
 	${DOCKER_COMPOSE} run --rm app npm run migrate
+
+# Clean node modules, package-lock.json and dist
+clean-deps:
+	${INFO} "Cleaning Node.js dependencies..."
+	${DOCKER_COMPOSE} run --rm app rm -rf package-lock.json node_modules dist
+
+# Fix permissions and clean install
+fix-install:
+	${INFO} "Fixing permissions and performing clean install..."
+	${DOCKER_COMPOSE} run --rm app sh -c "rm -rf node_modules package-lock.json && npm cache clean --force && npm install"
+
+# Force rebuild node modules with platform-specific binaries
+rebuild-modules:
+	${INFO} "Rebuilding node modules..."
+	${DOCKER_COMPOSE} run --rm app sh -c "npm rebuild"
