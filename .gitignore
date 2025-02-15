@@ -21,6 +21,3 @@ npm-debug.log*
 
 # Test coverage
 coverage/
-
-# Cursor rules
-.cursorrules
