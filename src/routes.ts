@@ -3,6 +3,7 @@ import swaggerJsdoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 
 import ExpenseCategoriesRoutes from './api/expense-categories/routes.js';
+import AuthRoutes from './api/auth/routes.js';
 import errorMiddleware from './middlewares/errorMiddleware.js';
 import { commonComponents } from './utils/swagger.js';
 import { V1_PREFIX } from './utils/constants.js';
@@ -25,6 +26,7 @@ const swaggerSpec = swaggerJsdoc(swaggerOptions);
 function setupRoutes(app: Express) {
     const apiV1Router = Router();
 
+    apiV1Router.use('/auth', AuthRoutes);
     apiV1Router.use('/expense-categories', ExpenseCategoriesRoutes);
 
     app.use(V1_PREFIX, apiV1Router);
