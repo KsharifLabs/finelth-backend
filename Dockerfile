@@ -35,7 +35,7 @@ COPY --from=builder /app/package*.json ./
 COPY --from=builder /app/tsconfig.json ./
 
 # Install production dependencies only
-RUN npm ci --only=production
+RUN npm ci
 
 # Install tsconfig-paths to resolve TypeScript path aliases
 RUN npm install tsconfig-paths

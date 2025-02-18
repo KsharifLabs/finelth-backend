@@ -16,7 +16,7 @@
     "format:check": "prettier --check \"src/**/*.ts\"",
     "prepare": "husky install",
     "type-check": "tsc --noEmit",
-    "test": "jest",
+    "test": "NODE_ENV=test jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "migrate": "node_modules/.bin/drizzle-kit migrate"
@@ -24,8 +24,7 @@
   "lint-staged": {
     "*.{js,ts}": [
       "prettier --write",
-      "eslint --fix",
-      "jest --bail --findRelatedTests --passWithNoTests"
+      "eslint --fix"
     ]
   },
   "author": "Kamal Sharif",
@@ -61,6 +60,7 @@
     "@types/swagger-ui-express": "^4.1.7",
     "@typescript-eslint/eslint-plugin": "^6.12.0",
     "@typescript-eslint/parser": "^6.12.0",
+    "cross-env": "^7.0.3",
     "drizzle-kit": "^0.30.1",
     "eslint": "^8.54.0",
     "eslint-config-prettier": "^9.0.0",

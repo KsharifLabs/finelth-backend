@@ -28,7 +28,7 @@ help:
 	@echo "  make clean-deps - Clean Node.js dependencies"
 	@echo "  make fix-install - Fix permissions and clean install"
 	@echo "  make rebuild-modules - Force rebuild node modules with platform-specific binaries"
-
+	@echo "  make check-types - Check types"
 # start docker container
 start:
 	${INFO} "Starting Docker container..."
@@ -127,3 +127,7 @@ fix-install:
 rebuild-modules:
 	${INFO} "Rebuilding node modules..."
 	${DOCKER_COMPOSE} run --rm app sh -c "npm rebuild"
+
+check-types:
+	${INFO} "Checking types..."
+	${DOCKER_COMPOSE} run --rm app npm run type-check

@@ -14,6 +14,7 @@ services:
         environment:
             - NODE_ENV=development
             - TS_NODE_PROJECT=tsconfig.json
+            - REDIS_URL=redis://redis:6379
         depends_on:
             - postgres
             - redis

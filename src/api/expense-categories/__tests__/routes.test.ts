@@ -1,3 +1,7 @@
+import dotenv from 'dotenv';
+
+dotenv.config({ path: '.env.test' });
+
 import request from 'supertest';
 import { Express } from 'express';
 

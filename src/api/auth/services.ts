@@ -1,12 +1,10 @@
 import { eq } from 'drizzle-orm';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { Redis } from 'ioredis';
 import { db } from '../../db/setup.js';
+import { getRedisClient } from '../../db/redis.js';
 import { users, refreshTokens } from './schema.js';
 import { LoginRequest } from './zodSchema.js';
-
-const redis = new Redis(process.env.REDIS_URL || 'redis://localhost:6379');
 
 const JWT_ACCESS_SECRET = process.env.JWT_ACCESS_SECRET || 'your-access-secret';
 const JWT_REFRESH_SECRET = process.env.JWT_REFRESH_SECRET || 'your-refresh-secret';
@@ -35,6 +33,7 @@ export class AuthService {
         });
 
         // Store access token in Redis
+        const redis = getRedisClient();
         await redis.set(
             `access_token:${user[0].id}`,
             accessToken,
@@ -63,6 +62,7 @@ export class AuthService {
     }
 
     static async logout(userId: number) {
+        const redis = getRedisClient();
         // Remove access token from Redis
         await redis.del(`access_token:${userId}`);
 
@@ -75,6 +75,7 @@ export class AuthService {
     static async validateAccessToken(token: string) {
         try {
             const decoded = jwt.verify(token, JWT_ACCESS_SECRET) as { userId: number };
+            const redis = getRedisClient();
             const storedToken = await redis.get(`access_token:${decoded.userId}`);
 
             if (!storedToken || storedToken !== token) {
