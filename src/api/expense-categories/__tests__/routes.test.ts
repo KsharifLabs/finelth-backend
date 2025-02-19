@@ -1,7 +1,7 @@
 import request from 'supertest';
-import { Express } from 'express';
+import express, { Express } from 'express';
 
-import { createApp } from '../../../app.js';
+import expenseCategoriesRouter from '../routes.js';
 import {
     saveExpenseCategory,
     getExpenseCategories,
@@ -11,6 +11,8 @@ import {
 } from '../services';
 import { V1_PREFIX } from '../../../utils/constants.js';
 import NotFoundError from '../../../utils/NotFoundError.js';
+import errorMiddleware from '../../../middlewares/errorMiddleware.js';
+import correlationIdMiddleware from '../../../middlewares/correlationIdMiddleware.js';
 
 // Mock the services
 jest.mock('../services', () => ({
@@ -27,7 +29,11 @@ describe('Expense Categories Routes', () => {
     let app: Express;
 
     beforeEach(() => {
-        app = createApp();
+        app = express();
+        app.use(correlationIdMiddleware);
+        app.use(express.json());
+        app.use(V1_PREFIX, express.Router().use('/expense-categories', expenseCategoriesRouter));
+        app.use(errorMiddleware);
     });
 
     afterEach(() => {
