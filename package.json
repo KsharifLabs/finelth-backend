@@ -24,8 +24,7 @@
   "lint-staged": {
     "*.{js,ts}": [
       "prettier --write",
-      "eslint --fix",
-      "jest --bail --findRelatedTests --passWithNoTests"
+      "eslint --fix"
     ]
   },
   "author": "Kamal Sharif",
