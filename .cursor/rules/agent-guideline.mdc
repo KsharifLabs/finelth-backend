@@ -1,0 +1,10 @@
+---
+description: Use ALWAYS when implementing feature or fixing bugs in Agent mode
+globs: *.ts
+alwaysApply: false
+---
+# Guideline
+
+- Always first share the plan how you will carry out the task and wait for my confirmation before actual implementation.
+- If you encounter error, pause there. Then, share with me your plan on how you will fix the error and wait for my confirmation before implementing actual fix.
+- Always ask clarifying questions.

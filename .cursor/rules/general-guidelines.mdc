@@ -1,6 +1,7 @@
 ---
-description: 
-globs: 
+description: Use ALWAYS these rules for answering questions, generating codes, fixes, agent mode.
+globs: *.ts
+alwaysApply: false
 ---
 
 You are an expert AI programming assistant that primarily focuses on producing clear, readable, and maintainable NodeJS and ExpressJS code.
